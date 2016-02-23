@@ -1,0 +1,46 @@
+---
+title: "Toothgrowth data analysis"
+author: "Yilin"
+date: "February 12, 2016"
+output: pdf_document
+---
+1.Load the ToothGrowth data and perform basic exploratory data analyses
+```{r}
+library(datasets)
+data(ToothGrowth)
+par(mfrow=c(1,3),mar=c(6,2,6,2))
+boxplot(ToothGrowth$len~I(ToothGrowth$supp),xlab="supp", ylab="length",
+        cex.axis=0.8,main="Diff of supp")
+boxplot(ToothGrowth$len~I(ToothGrowth$dose),xlab="supp", ylab="length",
+        cex.axis=0.8,main="Diff of dose")
+boxplot(ToothGrowth$len~I(ToothGrowth$supp)+I(ToothGrowth$dose),
+        xlab="supp", ylab="length",cex.axis=0.8,main="Diff of supp plus dose")
+```
+
+2.Basic summary of the data
+```{r}
+summary(ToothGrowth)
+with(ToothGrowth,table(supp,dose))
+mean_len<-aggregate(len ~ .,data=ToothGrowth,mean)
+mean_len
+```
+
+3.Compare Tooth growth by supp and dose
+```{r}
+library(dplyr)
+D0.5<-subset(ToothGrowth,dose==0.5); D1<-subset(ToothGrowth,dose==1)
+D2<-subset(ToothGrowth,dose=2);OJ<-subset(ToothGrowth,supp=="OJ")
+VC<-subset(ToothGrowth,supp=="VC")
+D0.5_1=t.test(D0.5$len,D1$len)$conf.int
+D1_2=t.test(D1$len,D2$len)$conf.int
+D0.5_2=t.test(D0.5$len,D2$len)$conf.int
+OJ_VC=t.test(OJ$len,VC$len)$conf.int
+conf.int<-cbind(group=c("D0.5_1","D1_2","D0.5_2","OJ_VC"),
+                low_diff=c(D0.5_1[1],D1_2[1],D0.5_2[1],OJ_VC[1]),
+                high_diff=c(D0.5_1[2],D1_2[2],D0.5_2[2],OJ_VC[2]))
+conf.int
+```
+
+4.State conclusions and assumptions
+Conclusion: 1.Different methods of intaking the drug between VC and OJ do not impact toothgrowth, the difference between toothlength of OJ group and VC group is not significant. 2. Increaseing the dose of the drug from low(0.5) to median(1) significantly promotes toothgrowth. However, further increasing drug dosage from 1 to 2 does not accelerate toothgrowth.
+Assumption: We define the type I error rate at alpha=0.05, that means the false rate of rejecting the H0 (toothlength between the compared two group is equal) when the H0 is actually true is 5%.
