@@ -42,5 +42,5 @@ conf.int
 ```
 
 4.State conclusions and assumptions
-Conclusion: 1.Different methods of intaking the drug between VC and OJ do not impact toothgrowth, the difference between toothlength of OJ group and VC group is not significant. 2. Increaseing the dose of the drug from low(0.5) to median(1) significantly promotes toothgrowth. However, further increasing drug dosage from 1 to 2 does not accelerate toothgrowth.
+Conclusion: 1.Difference of VC and OJ do not impact toothgrowth, the difference between toothlength of OJ group and VC group is not significant. 2. Increaseing the dose of the drug from low(0.5) to median(1) significantly promotes toothgrowth. However, further increasing drug dosage from 1 to 2 does not accelerate toothgrowth.
 Assumption: We define the type I error rate at alpha=0.05, that means the false rate of rejecting the H0 (toothlength between the compared two group is equal) when the H0 is actually true is 5%.
